@@ -168,6 +168,7 @@ Placement Table
 * status - String (Pending/Confirmed/Completed/Cancelled)
 
 🎯 Usage
+
 Add Students - Navigate to Candidates → Add Student
 
 Add Companies - Navigate to Companies → Add Company

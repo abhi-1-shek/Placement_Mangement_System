@@ -1,0 +1,48 @@
+
+package com.pms.controller;
+
+import com.pms.model.Placement;
+import com.pms.service.PlacementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/placements")
+@CrossOrigin(origins = "http://localhost:5173")
+public class PlacementController {
+    @Autowired
+    private PlacementService placementService;
+    
+    @GetMapping
+    public List<Placement> getAllPlacements() {
+        return placementService.getAllPlacements();
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Placement> getPlacementById(@PathVariable Long id) {
+        Placement placement = placementService.getPlacementById(id);
+        return ResponseEntity.ok(placement);
+    }
+    
+    @PostMapping
+    public ResponseEntity<Placement> createPlacement(@RequestBody Placement placement) {
+        Placement savedPlacement = placementService.savePlacement(placement);
+        return new ResponseEntity<>(savedPlacement, HttpStatus.CREATED);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Placement> updatePlacement(@PathVariable Long id, @RequestBody Placement placement) {
+        placement.setId(id);
+        Placement updatedPlacement = placementService.savePlacement(placement);
+        return ResponseEntity.ok(updatedPlacement);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePlacement(@PathVariable Long id) {
+        placementService.deletePlacement(id);
+        return ResponseEntity.noContent().build();
+    }
+}
